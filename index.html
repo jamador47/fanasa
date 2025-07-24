@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferretería LARACH - Soporte al Cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <style>
+        /* Estilos personalizados para Ferretería LARACH */
+        :root {
+            /* Colores de marca - Ferretería LARACH (ejemplo) */
+            --chat--color-primary: #004D99; /* Azul fuerte, común en ferreterías */
+            --chat--color-primary-shade-50: #003B7A;
+            --chat--color-primary-shade-100: #00295C;
+            --chat--color-secondary: #FF9900; /* Naranja/Amarillo para energía y visibilidad */
+            --chat--color-secondary-shade-50: #CC7A00;
+            
+            /* Colores neutros */
+            --chat--color-white: #ffffff;
+            --chat--color-light: #f4f4f4;
+            --chat--color-light-shade-50: #e0e0e0;
+            --chat--color-light-shade-100: #cccccc;
+            --chat--color-medium: #a0a0a0;
+            --chat--color-dark: #333333;
+            --chat--color-disabled: #999999;
+            --chat--color-typing: #666666;
+
+            /* Diseño */
+            --chat--spacing: 1rem;
+            --chat--border-radius: 8px; /* Ligeramente menos redondeado para un look más "industrial" */
+            --chat--transition-duration: 0.3s;
+
+            /* Dimensiones de la ventana */
+            --chat--window--width: 100%;
+            --chat--window--height: 100%;
+
+            /* Estilo del encabezado */
+            --chat--header-height: auto;
+            --chat--header--padding: 1rem 1.2rem;
+            --chat--header--background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
+            --chat--header--color: var(--chat--color-white);
+            --chat--header--border-top: none;
+            --chat--header--border-bottom: 3px solid var(--chat--color-secondary);
+            --chat--heading--font-size: 1.5em;
+            --chat--subtitle--font-size: 0.9em;
+            --chat--subtitle--line-height: 1.4;
+
+            /* Área de entrada */
+            --chat--textarea--height: 60px;
+
+            /* Mensajes */
+            --chat--message--font-size: 0.95rem;
+            --chat--message--padding: 1rem;
+            --chat--message--border-radius: 10px;
+            --chat--message-line-height: 1.6;
+            
+            /* Mensajes del bot */
+            --chat--message--bot--background: var(--chat--color-white);
+            --chat--message--bot--color: var(--chat--color-dark);
+            --chat--message--bot--border: 1px solid var(--chat--color-light-shade-100);
+            
+            /* Mensajes del usuario */
+            --chat--message--user--background: var(--chat--color-secondary);
+            --chat--message--user--color: var(--chat--color-white);
+            --chat--message--user--border: none;
+            
+            /* Bloques de código */
+            --chat--message--pre--background: rgba(0, 0, 0, 0.05);
+
+            /* Botón de alternancia (no usado en modo pantalla completa) */
+            --chat--toggle--background: var(--chat--color-secondary);
+            --chat--toggle--hover--background: var(--chat--color-secondary-shade-50);
+            --chat--toggle--active--background: #B37300;
+            --chat--toggle--color: var(--chat--color-white);
+            --chat--toggle--size: 70px;
+        }
+
+        /* Estilo general del cuerpo */
+        body {
+            font-family: 'Roboto', 'Arial', sans-serif; /* Fuente más robusta */
+            background-color: #e6e6e6; /* Fondo gris claro */
+            margin: 0;
+            padding: 20px 0; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+        }
+
+        /* Contenedor principal */
+        .main-wrapper {
+            max-width: 900px; 
+            margin: 0 auto;
+            padding: 0 15px; 
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Estilo del logo en el encabezado del chat (si se usara) */
+        .chat-header-logo {
+            width: 45px;
+            height: 45px;
+            margin-right: 12px;
+            border-radius: 50%; /* Circular para logos */
+            object-fit: contain;
+            background: white;
+            padding: 3px;
+        }
+
+        /* Encabezado de marca con logo */
+        .brand-header {
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 30px 20px; 
+            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
+            border-radius: var(--chat--border-radius);
+            box-shadow: 0 8px 25px rgba(0, 77, 153, 0.35); /* Sombra con color primario */
+            text-align: center; 
+        }
+
+        .brand-logo {
+            width: 120px; /* Tamaño del logo un poco más grande */
+            height: 120px;
+            margin-bottom: 20px; 
+            object-fit: contain;
+            background: var(--chat--color-white);
+            padding: 15px; /* Más padding para el logo */
+            border-radius: 50%; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            animation: pulse 1.5s infinite alternate; /* Animación más sutil */
+        }
+
+        .brand-header h1 {
+            color: var(--chat--color-white);
+            font-size: 2em; /* Título más prominente */
+            margin: 0 0 8px 0;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .brand-header p {
+            color: var(--chat--color-light);
+            font-size: 1.1em;
+            margin: 0;
+            line-height: 1.6;
+            max-width: 90%; 
+            font-weight: 300;
+        }
+
+        /* Texto introductorio antes del chat */
+        .intro-text {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--chat--color-dark);
+            padding: 0 10px; 
+        }
+
+        .intro-text p:first-of-type {
+            font-size: 1.4em; 
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--chat--color-primary); 
+        }
+
+        .intro-text p:last-of-type {
+            font-size: 1.15em;
+            opacity: 0.9;
+        }
+
+        /* Sección de instrucciones "Cómo usar" */
+        .instructions-section {
+            margin-top: 20px; 
+            padding: 25px;
+            background: var(--chat--color-white);
+            border-radius: var(--chat--border-radius);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
+            border-left: 5px solid var(--chat--color-secondary); 
+            margin-bottom: 30px; 
+        }
+
+        .instructions-section h3 {
+            color: var(--chat--color-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.6em; 
+            gap: 12px; 
+            font-weight: 700;
+        }
+        
+        /* Iconos en los títulos de las secciones de instrucciones */
+        .instructions-section h3::before {
+            content: '🛠️'; /* Icono de herramientas */
+            font-size: 1.2em;
+        }
+
+        .instruction-card {
+            background: var(--chat--color-light); 
+            padding: 20px;
+            border-radius: var(--chat--border-radius);
+            border: 1px solid var(--chat--color-light-shade-100); 
+            margin-bottom: 20px;
+            transition: all 0.3s ease; 
+        }
+
+        .instruction-card:hover {
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .instruction-card h4 {
+            color: var(--chat--color-primary);
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px; 
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .instruction-card ul {
+            color: var(--chat--color-dark);
+            margin: 0;
+            padding-left: 25px; /* Más espacio para las viñetas */
+            line-height: 1.8;
+            list-style: none; 
+        }
+
+        .instruction-card ul li {
+            position: relative;
+            padding-left: 25px; 
+            margin-bottom: 10px;
+        }
+
+        .instruction-card ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .instruction-card ul li::before {
+            content: '✔️'; /* Checkmark para la lista */
+            color: var(--chat--color-secondary); 
+            font-size: 1em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .instruction-card ul li strong {
+            color: var(--chat--color-primary-shade-50); 
+        }
+
+        /* Contenedor del chat N8N */
+        #n8n-chat {
+            width: 100% !important;
+            height: 65vh !important; 
+            max-width: 800px;
+            margin: 0 auto 30px auto; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+            border-radius: var(--chat--border-radius);
+            overflow: hidden;
+            background: var(--chat--color-white);
+            flex-shrink: 0; 
+        }
+
+        /* Tipografía del chat N8N */
+        .n8n-chat-title {
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            font-size: var(--chat--heading--font-size); 
+        }
+
+        .n8n-chat-subtitle {
+            opacity: 0.95;
+            font-weight: 400;
+            font-size: var(--chat--subtitle--font-size); 
+        }
+
+        /* Animación para el logo (sutil pulso) */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+            100% { transform: scale(1.02); box-shadow: 0 6px 15px rgba(0,0,0,0.2); } 
+        }
+
+        /* Media queries para mejor experiencia móvil */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 0;
+            }
+
+            .main-wrapper {
+                padding: 0 10px;
+            }
+
+            .brand-header {
+                padding: 25px 15px;
+                margin-bottom: 25px;
+            }
+
+            .brand-logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 15px;
+            }
+
+            .brand-header h1 {
+                font-size: 1.8em;
+            }
+
+            .brand-header p {
+                font-size: 1em;
+            }
+
+            .intro-text {
+                margin-bottom: 25px;
+            }
+
+            .intro-text p:first-of-type {
+                font-size: 1.2em;
+            }
+
+            .intro-text p:last-of-type {
+                font-size: 1em;
+            }
+
+            .instructions-section {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+
+            .instructions-section h3 {
+                font-size: 1.4em;
+            }
+
+            .instruction-card {
+                padding: 18px;
+            }
+
+            .instruction-card h4 {
+                font-size: 1.2em;
+            }
+
+            .instruction-card ul {
+                font-size: 0.95em;
+            }
+
+            #n8n-chat {
+                height: 70vh !important; 
+                margin-bottom: 20px;
+            }
+
+            /* Ajustes adicionales para el encabezado del chat en pantallas muy pequeñas */
+            :root {
+                --chat--header--padding: 0.7rem 1rem;
+                --chat--heading--font-size: 1.4em;
+                --chat--subtitle--font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="brand-header">
+            <img src="https://media.larachycia.com/media/general/logo-larach.png" 
+                 alt="Ferretería LARACH Logo" 
+                 class="brand-logo">
+            <h1>Ferretería LARACH</h1>
+            <p>Tu aliado en proyectos de construcción, hogar y más.</p>
+        </div>
+
+        <div class="intro-text">
+            <p>¡Bienvenido al asistente virtual de Ferretería LARACH!</p>
+            <p>Estamos aquí para ayudarte con tus consultas sobre productos, stock y asesoramiento técnico.</p>
+        </div>
+
+        <div class="instructions-section">
+            <h3>Cómo podemos ayudarte:</h3>
+            <div class="instruction-card">
+                <h4>
+                    🛒 Consulta de Productos y Stock:
+                </h4>
+                <ul>
+                    <li><strong>Disponibilidad:</strong> Pregunta si tenemos un producto en específico y su cantidad.</li>
+                    <li><strong>Precios:</strong> Consulta el precio de nuestros artículos.</li>
+                    <li><strong>Características:</strong> Obtén detalles técnicos sobre herramientas, materiales, etc.</li>
+                </ul>
+            </div>
+            <div class="instruction-card">
+                <h4>
+                    💡 Asesoramiento Técnico:
+                </h4>
+                <ul>
+                    <li><strong>Uso de Herramientas:</strong> Pregunta cómo usar correctamente una herramienta.</li>
+                    <li><strong>Mejores Prácticas:</strong> Recibe consejos para tus proyectos de construcción o mejoras del hogar.</li>
+                    <li><strong>Compatibilidad:</strong> Aclara dudas sobre qué productos combinan mejor.</li>
+                </ul>
+            </div>
+            <div class="instruction-card">
+                <h4>
+                    💬 Chat 24/7 y Multilingüe:
+                </h4>
+                <ul>
+                    <li><strong>Atención Continua:</strong> Estamos disponibles a cualquier hora, todos los días.</li>
+                    <li><strong>Idioma:</strong> Haz tus preguntas en el idioma que prefieras.</li>
+                    <li><strong>Respuestas Rápidas:</strong> Obtén información al instante sin esperas.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="n8n-chat"></div>
+    </div>
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        // Inicializar chat (solo texto)
+        const webhookUrl = 'https://jossuehn.app.n8n.cloud/webhook/ce6d7462-7c55-4409-be10-cc83fd1ff753'; // Reemplaza con tu URL real del webhook de n8n
+        window.chatWebhookUrl = webhookUrl;
+
+        createChat({
+            webhookUrl: webhookUrl,
+            
+            // Configuración del chat
+            target: '#n8n-chat',
+            mode: 'fullscreen',  
+            loadPreviousSession: true,
+            showWelcomeScreen: false,   
+            
+            // Mensajes iniciales específicos de ferretería
+            initialMessages: [
+                '🛠️ ¡Hola! Bienvenido a Ferretería LARACH. 🛠️',
+                '¿En qué podemos ayudarte hoy con tus proyectos o necesidades de herramientas?',
+            ],
+            
+            // Internacionalización en español
+            i18n: {
+                en: { 
+                    title: '🔧 Ferretería LARACH',
+                    subtitle: 'Materiales • Herramientas • Asesoría Experta',
+                    footer: 'Impulsado por Ferretería LARACH',
+                    inputPlaceholder: 'Escribe tu consulta (ej. "precio de cemento" o "cómo usar taladro")...',
+                },
+            },
+            
+            // Configuración adicional
+            chatInputKey: 'chatInput',
+            chatSessionKey: 'sessionId',
+            defaultLanguage: 'en', // Aunque los textos son en español, 'en' puede ser el default si n8n maneja la traducción.
+            
+            // Habilitar subida de archivos (imágenes para referencia de productos)
+            allowFileUploads: true,
+            allowedFilesMimeTypes: 'image/*', // Permitir solo imágenes
+            
+            // Configuración del webhook
+            webhookConfig: {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            },
+            
+            // Metadatos del chat
+            metadata: {
+                source: 'sitio_web_ferreteria',
+                business: 'ferreteria_larach',
+                department: 'atencion_al_cliente',
+                chatType: 'text_only',
+                language: 'spanish'
+            }
+        });
+    </script>
+</body>
+</html>
