@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferretería LARACH - Soporte al Cliente</title>
+    <title>FANASA - Soporte al Cliente</title>
     <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
     <style>
-        /* Estilos personalizados para Ferretería LARACH */
+        /* Estilos personalizados para FANASA */
         :root {
-            /* Colores de marca - Ferretería LARACH (ejemplo) */
-            --chat--color-primary: #004D99; /* Azul fuerte, común en ferreterías */
-            --chat--color-primary-shade-50: #003B7A;
-            --chat--color-primary-shade-100: #00295C;
-            --chat--color-secondary: #FF9900; /* Naranja/Amarillo para energía y visibilidad */
-            --chat--color-secondary-shade-50: #CC7A00;
+            /* Colores de marca - FANASA (basado en la imagen proporcionada, pero con paleta de azules) */
+            --chat--color-primary: #007BFF; /* Azul vibrante de FANASA, similar al logo y uniformes */
+            --chat--color-primary-shade-50: #006AC2;
+            --chat--color-primary-shade-100: #0059A5;
+            --chat--color-secondary: #004D99; /* Azul más oscuro para acentos, en lugar de amarillo */
+            --chat--color-secondary-shade-50: #003B7A;
             
             /* Colores neutros */
             --chat--color-white: #ffffff;
@@ -27,7 +27,7 @@
 
             /* Diseño */
             --chat--spacing: 1rem;
-            --chat--border-radius: 8px; /* Ligeramente menos redondeado para un look más "industrial" */
+            --chat--border-radius: 8px;
             --chat--transition-duration: 0.3s;
 
             /* Dimensiones de la ventana */
@@ -40,7 +40,7 @@
             --chat--header--background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
             --chat--header--color: var(--chat--color-white);
             --chat--header--border-top: none;
-            --chat--header--border-bottom: 3px solid var(--chat--color-secondary);
+            --chat--header--border-bottom: 3px solid var(--chat--color-secondary); /* Borde ahora en azul oscuro */
             --chat--heading--font-size: 1.5em;
             --chat--subtitle--font-size: 0.9em;
             --chat--subtitle--line-height: 1.4;
@@ -60,38 +60,38 @@
             --chat--message--bot--border: 1px solid var(--chat--color-light-shade-100);
             
             /* Mensajes del usuario */
-            --chat--message--user--background: var(--chat--color-secondary);
-            --chat--message--user--color: var(--chat--color-white);
+            --chat--message--user--background: var(--chat--color-secondary); /* Ahora azul oscuro */
+            --chat--message--user--color: var(--chat--color-white); /* Texto blanco para contraste en azul oscuro */
             --chat--message--user--border: none;
             
             /* Bloques de código */
             --chat--message--pre--background: rgba(0, 0, 0, 0.05);
 
             /* Botón de alternancia (no usado en modo pantalla completa) */
-            --chat--toggle--background: var(--chat--color-secondary);
+            --chat--toggle--background: var(--chat--color-secondary); /* Ahora azul oscuro */
             --chat--toggle--hover--background: var(--chat--color-secondary-shade-50);
-            --chat--toggle--active--background: #B37300;
-            --chat--toggle--color: var(--chat--color-white);
+            --chat--toggle--active--background: #00295C; /* Un poco más oscuro */
+            --chat--toggle--color: var(--chat--color-white); /* Texto blanco para contraste en azul oscuro */
             --chat--toggle--size: 70px;
         }
 
         /* Estilo general del cuerpo */
         body {
-            font-family: 'Roboto', 'Arial', sans-serif; /* Fuente más robusta */
-            background-color: #e6e6e6; /* Fondo gris claro */
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background-color: #e6e6e6;
             margin: 0;
-            padding: 20px 0; 
+            padding: 20px 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; 
+            min-height: 100vh;
         }
 
         /* Contenedor principal */
         .main-wrapper {
-            max-width: 900px; 
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 15px; 
-            flex-grow: 1; 
+            padding: 0 15px;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
@@ -101,7 +101,7 @@
             width: 45px;
             height: 45px;
             margin-right: 12px;
-            border-radius: 50%; /* Circular para logos */
+            border-radius: 50%;
             object-fit: contain;
             background: white;
             padding: 3px;
@@ -110,32 +110,32 @@
         /* Encabezado de marca con logo */
         .brand-header {
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             margin-bottom: 30px;
-            padding: 30px 20px; 
+            padding: 30px 20px;
             background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
             border-radius: var(--chat--border-radius);
-            box-shadow: 0 8px 25px rgba(0, 77, 153, 0.35); /* Sombra con color primario */
-            text-align: center; 
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.35); /* Sombra con color primario azul */
+            text-align: center;
         }
 
         .brand-logo {
-            width: 120px; /* Tamaño del logo un poco más grande */
+            width: 120px;
             height: 120px;
-            margin-bottom: 20px; 
+            margin-bottom: 20px;
             object-fit: contain;
             background: var(--chat--color-white);
-            padding: 15px; /* Más padding para el logo */
-            border-radius: 50%; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-            animation: pulse 1.5s infinite alternate; /* Animación más sutil */
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: pulse 1.5s infinite alternate;
         }
 
         .brand-header h1 {
             color: var(--chat--color-white);
-            font-size: 2em; /* Título más prominente */
+            font-size: 2em;
             margin: 0 0 8px 0;
             letter-spacing: 1px;
             font-weight: 700;
@@ -146,7 +146,7 @@
             font-size: 1.1em;
             margin: 0;
             line-height: 1.6;
-            max-width: 90%; 
+            max-width: 90%;
             font-weight: 300;
         }
 
@@ -155,14 +155,14 @@
             text-align: center;
             margin-bottom: 30px;
             color: var(--chat--color-dark);
-            padding: 0 10px; 
+            padding: 0 10px;
         }
 
         .intro-text p:first-of-type {
-            font-size: 1.4em; 
+            font-size: 1.4em;
             margin-bottom: 10px;
             font-weight: 600;
-            color: var(--chat--color-primary); 
+            color: var(--chat--color-primary);
         }
 
         .intro-text p:last-of-type {
@@ -172,13 +172,13 @@
 
         /* Sección de instrucciones "Cómo usar" */
         .instructions-section {
-            margin-top: 20px; 
+            margin-top: 20px;
             padding: 25px;
             background: var(--chat--color-white);
             border-radius: var(--chat--border-radius);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
-            border-left: 5px solid var(--chat--color-secondary); 
-            margin-bottom: 30px; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--chat--color-secondary); /* Borde ahora en azul oscuro */
+            margin-bottom: 30px;
         }
 
         .instructions-section h3 {
@@ -186,24 +186,24 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            font-size: 1.6em; 
-            gap: 12px; 
+            font-size: 1.6em;
+            gap: 12px;
             font-weight: 700;
         }
         
         /* Iconos en los títulos de las secciones de instrucciones */
         .instructions-section h3::before {
-            content: '🛠️'; /* Icono de herramientas */
+            content: '⚙️'; /* Icono de engranajes para FANASA */
             font-size: 1.2em;
         }
 
         .instruction-card {
-            background: var(--chat--color-light); 
+            background: var(--chat--color-light);
             padding: 20px;
             border-radius: var(--chat--border-radius);
-            border: 1px solid var(--chat--color-light-shade-100); 
+            border: 1px solid var(--chat--color-light-shade-100);
             margin-bottom: 20px;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
         .instruction-card:hover {
@@ -216,7 +216,7 @@
             margin: 0 0 15px 0;
             display: flex;
             align-items: center;
-            gap: 10px; 
+            gap: 10px;
             font-size: 1.3em;
             font-weight: 600;
         }
@@ -224,14 +224,14 @@
         .instruction-card ul {
             color: var(--chat--color-dark);
             margin: 0;
-            padding-left: 25px; /* Más espacio para las viñetas */
+            padding-left: 25px;
             line-height: 1.8;
-            list-style: none; 
+            list-style: none;
         }
 
         .instruction-card ul li {
             position: relative;
-            padding-left: 25px; 
+            padding-left: 25px;
             margin-bottom: 10px;
         }
 
@@ -240,8 +240,8 @@
         }
 
         .instruction-card ul li::before {
-            content: '✔️'; /* Checkmark para la lista */
-            color: var(--chat--color-secondary); 
+            content: '✅'; /* Checkmark para la lista */
+            color: var(--chat--color-secondary); /* Ahora en azul oscuro */
             font-size: 1em;
             position: absolute;
             left: 0;
@@ -249,39 +249,39 @@
         }
 
         .instruction-card ul li strong {
-            color: var(--chat--color-primary-shade-50); 
+            color: var(--chat--color-primary-shade-50);
         }
 
         /* Contenedor del chat N8N */
         #n8n-chat {
             width: 100% !important;
-            height: 65vh !important; 
+            height: 65vh !important;
             max-width: 800px;
-            margin: 0 auto 30px auto; 
+            margin: 0 auto 30px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
             border-radius: var(--chat--border-radius);
             overflow: hidden;
             background: var(--chat--color-white);
-            flex-shrink: 0; 
+            flex-shrink: 0;
         }
 
         /* Tipografía del chat N8N */
         .n8n-chat-title {
             font-weight: 700;
             letter-spacing: 0.8px;
-            font-size: var(--chat--heading--font-size); 
+            font-size: var(--chat--heading--font-size);
         }
 
         .n8n-chat-subtitle {
             opacity: 0.95;
             font-weight: 400;
-            font-size: var(--chat--subtitle--font-size); 
+            font-size: var(--chat--subtitle--font-size);
         }
 
         /* Animación para el logo (sutil pulso) */
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-            100% { transform: scale(1.02); box-shadow: 0 6px 15px rgba(0,0,0,0.2); } 
+            100% { transform: scale(1.02); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
         }
 
         /* Media queries para mejor experiencia móvil */
@@ -347,7 +347,7 @@
             }
 
             #n8n-chat {
-                height: 70vh !important; 
+                height: 70vh !important;
                 margin-bottom: 20px;
             }
 
@@ -363,15 +363,15 @@
 <body>
     <div class="main-wrapper">
         <div class="brand-header">
-            <img src="https://media.larachycia.com/media/general/logo-larach.png" 
-                 alt="Ferretería LARACH Logo" 
+            <img src="https://scontent.ftgu3-4.fna.fbcdn.net/v/t39.30808-6/416145150_785516373589378_6429741605061112230_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=SJvk02aADXEQ7kNvwEQ2rgp&_nc_oc=Adl5NL1uJp7kXF8pkYBzDl1Yv8urUB6qkL-xILZkvFDkbT4L8P0COwp6ljYwRlUQEPo&_nc_zt=23&_nc_ht=scontent.ftgu3-4.fna&_nc_gid=lhYoaFk655lYNoeLARmpQg&oh=00_AfTnGKVrjBWydSO2xcP1gGgtk_UCHcwuSTM_Dxq4yPL1hA&oe=688DD2D8" 
+                 alt="FANASA Logo" 
                  class="brand-logo">
-            <h1>Ferretería LARACH</h1>
+            <h1>FANASA</h1>
             <p>Tu aliado en proyectos de construcción, hogar y más.</p>
         </div>
 
         <div class="intro-text">
-            <p>¡Bienvenido al asistente virtual de Ferretería LARACH!</p>
+            <p>¡Bienvenido al asistente virtual de FANASA!</p>
             <p>Estamos aquí para ayudarte con tus consultas sobre productos, stock y asesoramiento técnico.</p>
         </div>
 
@@ -384,7 +384,7 @@
                 <ul>
                     <li><strong>Disponibilidad:</strong> Pregunta si tenemos un producto en específico y su cantidad.</li>
                     <li><strong>Precios:</strong> Consulta el precio de nuestros artículos.</li>
-                    <li><strong>Características:</strong> Obtén detalles técnicos sobre herramientas, materiales, etc.</li>
+                    <li><strong>Características:</b> Obtén detalles técnicos sobre herramientas, materiales, etc.</li>
                 </ul>
             </div>
             <div class="instruction-card">
@@ -416,7 +416,7 @@
         import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
         // Inicializar chat (solo texto)
-        const webhookUrl = 'https://jossuehn.app.n8n.cloud/webhook/ce6d7462-7c55-4409-be10-cc83fd1ff753'; // Reemplaza con tu URL real del webhook de n8n
+        const webhookUrl = 'https://jossuehn.app.n8n.cloud/webhook-test/f65d1788-6d8d-40c3-b0f3-4051cd512a51'; // Reemplaza con tu URL real del webhook de n8n
         window.chatWebhookUrl = webhookUrl;
 
         createChat({
@@ -426,20 +426,20 @@
             target: '#n8n-chat',
             mode: 'fullscreen',  
             loadPreviousSession: true,
-            showWelcomeScreen: false,   
+            showWelcomeScreen: false,  
             
             // Mensajes iniciales específicos de ferretería
             initialMessages: [
-                '🛠️ ¡Hola! Bienvenido a Ferretería LARACH. 🛠️',
+                '⚙️ ¡Hola! Bienvenido a FANASA. ⚙️',
                 '¿En qué podemos ayudarte hoy con tus proyectos o necesidades de herramientas?',
             ],
             
             // Internacionalización en español
             i18n: {
                 en: { 
-                    title: '🔧 Ferretería LARACH',
+                    title: '⚙️ FANASA',
                     subtitle: 'Materiales • Herramientas • Asesoría Experta',
-                    footer: 'Impulsado por Ferretería LARACH',
+                    footer: 'Impulsado por FANASA',
                     inputPlaceholder: 'Escribe tu consulta (ej. "precio de cemento" o "cómo usar taladro")...',
                 },
             },
@@ -464,7 +464,7 @@
             // Metadatos del chat
             metadata: {
                 source: 'sitio_web_ferreteria',
-                business: 'ferreteria_larach',
+                business: 'FANASA',
                 department: 'atencion_al_cliente',
                 chatType: 'text_only',
                 language: 'spanish'
